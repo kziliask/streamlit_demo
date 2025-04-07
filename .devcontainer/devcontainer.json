@@ -1,9 +1,19 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/universal:2",
-	"features": {
-		"ghcr.io/va-h/devcontainers-features/uv:1": {
-			"shellautocompletion": true,
-			"version": "latest"
-		}
-	}
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/va-h/devcontainers-features/uv:1": {
+      "shellautocompletion": true,
+      "version": "latest"
+    }
+  },
+  "postCreateCommand": "uv sync",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff"
+      ]
+    }
+  }
 }
