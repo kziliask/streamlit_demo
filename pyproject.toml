@@ -8,6 +8,8 @@ classifiers = [ "Programming Language :: Python :: 3 :: Only", "Programming Lang
 dependencies = [
   "matplotlib>=3.10.1",
   "mypy>=1.15",
+  "plotly>=6.0.1",
   "pre-commit>=4.2",
+  "seaborn>=0.13.2",
   "streamlit>=1.44.1",
 ]

@@ -1,33 +1,28 @@
 import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
+from datetime import datetime
+import csv
 
-# App title
-st.title("Interactive EOQ Model")
-st.latex(r"EOQ = \sqrt{\frac{2K\lambda}{H}}")
-# Interactive inputs
-demand = st.slider("Annual Demand (units)", 100, 10000, 2000)
-order_cost = st.slider("Ordering Cost ($ per order)", 10, 500, 50)
-holding_cost = st.slider("Holding Cost ($ per unit/year)", 1, 100, 10)
-
-# EOQ calculation
-EOQ = np.sqrt((2 * demand * order_cost) / holding_cost)
-orders_per_year = demand / EOQ
-total_cost = (orders_per_year * order_cost) + ((EOQ / 2) * holding_cost)
-
-# Output results
-st.write(f"### Optimal Order Quantity (EOQ): {EOQ:.2f} units")
-st.write(f"Number of Orders per Year: {orders_per_year:.2f}")
-st.write(f"Total Annual Cost: ${total_cost:.2f}")
-
-# Visualize costs
-quantities = np.arange(EOQ / 2, EOQ * 1.5, EOQ / 50)
-costs = (demand / quantities) * order_cost + (quantities / 2) * holding_cost
-
-fig, ax = plt.subplots()
-ax.plot(quantities, costs, label="Total Cost Curve")
-ax.axvline(EOQ, color="red", linestyle="--", label="EOQ")
-ax.set_xlabel("Order Quantity")
-ax.set_ylabel("Annual Cost ($)")
-ax.legend()
-st.pyplot(fig)
+st.title("Data Input Example")
+now = datetime.now()
+number = st.number_input("Enter a number:", min_value=0, max_value=100, value=50)
+if number == 49:
+    st.success("You entered 49!")
+else:
+    st.error("You did not enter 49.")
+st.write("**You entered:**", number)
+c1, c2 = st.columns(2)
+with c1:
+    name = st.text_input("Enter your name:")
+with c2:
+    text = st.text_input(label="Enter some text")
+current_time = now.strftime("%H:%M:%S")
+if st.button("Write to file"):
+    with open("data.csv", "a") as file:
+        row_to_write = [name, current_time, text]
+        writer = csv.writer(file)
+        writer.writerow(row_to_write)
+    st.success("Data written to file successfully!")
+df = pd.read_csv("data.csv")
+with st.expander("View Data"):
+    st.write(df)
